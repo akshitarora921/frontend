@@ -24,7 +24,6 @@
   display: flex;
   align-items: center;
   background-color: #f6f6f6;
-
   height: 39px;
   padding: 1px;
 }
@@ -37,6 +36,7 @@
   margin-right: 10px;
   height: 35px;
   border-radius: 20px;
+  overflow: hidden;
 }
 .sidebar__searchContainer > form > input {
   border: none;
@@ -54,6 +54,7 @@
 
 .sidebar__chat {
   flex: 1;
+  overflow: scoll !important;
   background-color: white;
-  overflow: scoll;
+  height: 60vh;
 }

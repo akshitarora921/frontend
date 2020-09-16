@@ -87,7 +87,7 @@ function Chat() {
       </div>
       <div className="chat__body">
         {messages.map((message) => (
-          <Message message={message} />
+          <Message key={message.id} message={message} />
         ))}
         <div ref={messagesEndRef} />
       </div>

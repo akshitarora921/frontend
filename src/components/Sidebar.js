@@ -82,9 +82,11 @@ function Sidebar() {
       </div>
       <div className="sidebar__chat">
         <SidebarChat addNewChat />
-        {rooms.map((room) => (
-          <SidebarChat key={room.id} name={room.data.name} id={room.id} />
-        ))}
+        <div className="sidebar__chat" style={{ overflowY: "auto" }}>
+          {rooms.map((room) => (
+            <SidebarChat key={room.id} name={room.data.name} id={room.id} />
+          ))}
+        </div>
       </div>
     </div>
   );

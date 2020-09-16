@@ -8,11 +8,9 @@ function Message({ message }) {
   useEffect(() => {
     setColorCode(Math.floor(Math.random() * 16777215).toString(16));
   }, [message]);
+  console.log(message);
   return (
-    <p
-      key="message.id"
-      className={`chat__message ${message.name === user && "chat__reciever"}`}
-    >
+    <p className={`chat__message ${message.name === user && "chat__reciever"}`}>
       <span
         className="chat__name"
         style={{
