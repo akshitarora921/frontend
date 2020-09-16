@@ -10,6 +10,8 @@ import db from "../firebase";
 import { useSelector } from "react-redux";
 function Sidebar() {
   const [rooms, setRooms] = useState([]);
+  const [roomName, setRoomName] = useState("");
+
   const user = useSelector((state) => state.user);
   useEffect(() => {
     const unsubscribe = db.collection("rooms").onSnapshot((snapshot) =>
@@ -24,6 +26,30 @@ function Sidebar() {
       unsubscribe();
     };
   }, []);
+  const searchRooms = (e) => {
+    e.preventDefault();
+    if (roomName.length === 0) {
+      db.collection("rooms").onSnapshot((snapshot) =>
+        setRooms(
+          snapshot.docs.map((doc) => ({
+            id: doc.id,
+            data: doc.data(),
+          }))
+        )
+      );
+    } else {
+      db.collection("rooms").onSnapshot((snapshot) =>
+        setRooms(
+          snapshot.docs
+            .filter((doc) => doc.data().name === roomName)
+            ?.map((doc) => ({
+              id: doc.id,
+              data: doc.data(),
+            }))
+        )
+      );
+    }
+  };
   return (
     <div className="sidebar">
       <div className="sidebar__header">
@@ -43,7 +69,15 @@ function Sidebar() {
       <div className="sidebar__search">
         <div className="sidebar__searchContainer">
           <SearchOutlinedIcon />
-          <input placeholder="Search or start new chat" type="text" />
+          <form>
+            <input
+              placeholder="Search or start new chat"
+              value={roomName}
+              type="text"
+              onChange={(e) => setRoomName(e.target.value)}
+            />
+            <button type="submit" onClick={searchRooms}></button>
+          </form>
         </div>
       </div>
       <div className="sidebar__chat">

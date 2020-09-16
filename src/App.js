@@ -11,7 +11,7 @@ function App() {
   const user = useSelector((state) => state.user);
   return (
     <div className="app">
-      {!true ? (
+      {!user ? (
         <Login />
       ) : (
         <div className="app__body">

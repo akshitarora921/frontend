@@ -1,19 +1,13 @@
-import React from "react";
-import { Button } from "@material-ui/core";
-import { auth, provider } from "../firebase";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setUser } from "../store/store";
 import "../css/login.css";
 
 function Login() {
+  const [userName, setUserName] = useState("");
   const dispatch = useDispatch();
   const signIn = () => {
-    auth
-      .signInWithPopup(provider)
-      .then((result) => dispatch(setUser(result.user)))
-      .catch((err) => {
-        return;
-      });
+    dispatch(setUser(userName));
   };
   return (
     <div className="login">
@@ -25,9 +19,17 @@ function Login() {
         <div className="login__text">
           <h1>Sign in to whatsapp</h1>
         </div>
-        <Button type="submit" onClick={signIn}>
-          Sign in with Google
-        </Button>
+        <form>
+          <input
+            type="text"
+            value={userName}
+            placeholder="Name"
+            onChange={(e) => setUserName(e.target.value)}
+          />
+          <button className="login__button" type="submit" onClick={signIn}>
+            Signin
+          </button>
+        </form>
       </div>
     </div>
   );

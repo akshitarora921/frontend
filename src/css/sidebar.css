@@ -38,10 +38,13 @@
   height: 35px;
   border-radius: 20px;
 }
-.sidebar__searchContainer > input {
+.sidebar__searchContainer > form > input {
   border: none;
   margin-left: 10px;
   outline: none;
+}
+.sidebar__searchContainer > form > button {
+  display: none;
 }
 
 .sidebar__searchContainer > .MuiSvgIcon-root {

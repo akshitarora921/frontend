@@ -17,7 +17,17 @@
   height: 100px;
   margin-bottom: 40px;
 }
-.login__container > button {
+.login__container > form > input {
+  border: 2px solid #0a8d48 !important;
+  margin-top: 10px;
+  outline: none;
+
+  width: 90%;
+  padding: 10px;
+  border-radius: 10px;
+}
+.login__container > form > button {
+  display: none;
   margin-top: 50px;
   text-transform: inherit !important;
   background-color: #0a8d48 !important;

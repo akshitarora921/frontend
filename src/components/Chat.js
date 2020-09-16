@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../css/chat.css";
 import { Avatar, IconButton } from "@material-ui/core";
 import {
@@ -20,6 +20,7 @@ function Chat() {
   const { roomId } = useParams();
   const [roomName, setRoomName] = useState("");
   const [messages, setMessages] = useState([]);
+  const messagesEndRef = useRef(null);
   const user = useSelector((state) => state.user);
   useEffect(() => {
     if (roomId) {
@@ -37,15 +38,24 @@ function Chat() {
     }
   }, [roomId]);
   useEffect(() => {
+    const fun = () => {
+      messagesEndRef.current.scrollIntoView();
+    };
+    return () => {
+      fun();
+    };
+  }, [messages]);
+  useEffect(() => {
     setSeed(Math.floor(Math.random() * 5000));
   }, [roomId]);
   const sendMessage = (e) => {
     e.preventDefault();
-    db.collection("rooms").doc(roomId).collection("messages").add({
-      message: input,
-      name: user?.displayName,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    });
+    input.length !== 0 &&
+      db.collection("rooms").doc(roomId).collection("messages").add({
+        message: input,
+        name: user,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      });
     setInput("");
   };
   return (
@@ -79,12 +89,14 @@ function Chat() {
         {messages.map((message) => (
           <Message message={message} />
         ))}
+        <div ref={messagesEndRef} />
       </div>
       <div className="chat__footer">
         <InsertEmoticon />
         <form>
           <input
             type="text"
+            autoFocus
             value={input}
             placeholder="Type a message"
             onChange={(e) => setInput(e.target.value)}
